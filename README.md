@@ -11,7 +11,7 @@ static void OutputResponseHeader(CommonResponseHeader responseHeader)
     Console.WriteLine($"{responseHeader.Status.Code} at {responseHeader.Timestamp}");
 }
 
-var client = new SolarClient("10.1.1.124", 1, OutputResponseHeader);
+var client = new SolarClient("IP_ADDRESS", 1, OutputResponseHeader);
 ```
 
 ## Implementation Status
