@@ -1,5 +1,5 @@
 # FroniusSolarClient [![Build Status](https://travis-ci.org/SeanoNET/NetoDotNET.svg?branch=master)](https://travis-ci.org/SeanoNET/NetoDotNET)
-A .NET Client wrapper for the Fronius Solar API to obtain data from various Fronius devices (inverters, SensorCards, StringControls) in a defined format through a central facility which acts asa proxy(e.g. FroniusDatalogger Web or Fronius Solar web).
+A .NET Client wrapper for the [Fronius Solar API](https://www.fronius.com/en/photovoltaics/products/all-products/system-monitoring/open-interfaces/fronius-solar-api-json-) to obtain data from various Fronius devices (inverters, SensorCards, StringControls) in a defined format through a central facility which acts as a proxy(e.g. FroniusDatalogger Web or Fronius Solar web).
 
 ## Getting Started
 
