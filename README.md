@@ -3,6 +3,10 @@ A .NET Client wrapper for the [Fronius Solar API](https://www.fronius.com/en/pho
 
 ## Getting Started
 
+Install the [NuGet package](https://www.nuget.org/packages/FroniusSolarClient.Core/)
+
+`Install-Package FroniusSolarClient.Core`
+
 ```csharp
 using FroniusSolarClient.Entities.SolarAPI.V1;
 
