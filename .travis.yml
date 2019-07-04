@@ -6,3 +6,16 @@ script:
   - dotnet restore
   - dotnet build -c Release
   - dotnet test
+before_deploy:
+  - dotnet pack FroniusSolarClient/FroniusSolarClient.csproj --output ../package/ -c Release 
+  - dotnet nuget push package/*.nupkg -k $NUGET_API_KEY -s $NUGET_SOURCE
+deploy:
+  provider: releases
+  api_key: $GITHUB_TOKEN
+  file_glob: true
+  file: package/*
+  skip_cleanup: true
+  draft: true
+  on:
+    tags: true
+    branch: master
