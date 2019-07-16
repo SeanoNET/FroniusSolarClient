@@ -8,6 +8,7 @@ namespace FroniusSolarClient.Entities.SolarAPI.V1.InverterRealtimeData
     {
         CumulationInverterData,
         CommonInverterData,
-        MinMaxInverterData
+        MinMaxInverterData,
+        P3InverterData
     }
 }
