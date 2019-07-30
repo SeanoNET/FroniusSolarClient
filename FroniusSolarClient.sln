@@ -5,7 +5,12 @@ VisualStudioVersion = 16.0.28729.10
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FroniusSolarClient", "FroniusSolarClient\FroniusSolarClient.csproj", "{A32EC43F-1A17-47CF-99F0-D59254AF4649}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FroniusSolarClient.Examples", "FroniusSolarClient.Examples\FroniusSolarClient.Examples.csproj", "{54B43B62-6DEC-4D95-8712-87E82051A978}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FroniusSolarClient.Examples", "FroniusSolarClient.Examples\FroniusSolarClient.Examples.csproj", "{54B43B62-6DEC-4D95-8712-87E82051A978}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3328D218-7CD7-4A44-A093-086CB1BDE675}"
+	ProjectSection(SolutionItems) = preProject
+		.travis.yml = .travis.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
