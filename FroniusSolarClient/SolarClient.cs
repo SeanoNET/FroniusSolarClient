@@ -1,7 +1,9 @@
 ﻿using FroniusSolarClient.Entities.SolarAPI.V1;
+using FroniusSolarClient.Entities.SolarAPI.V1.ArchiveData;
 using FroniusSolarClient.Entities.SolarAPI.V1.InverterRealtimeData;
 using FroniusSolarClient.Services;
 using System;
+using System.Collections.Generic;
 
 namespace FroniusSolarClient
 {
@@ -15,6 +17,7 @@ namespace FroniusSolarClient
 
         // Services
         private InverterRealtimeDataService _inverterRealtimeDataService;
+        private InverterArchiveDataService _inverterArchiveDataService;
 
         public SolarClient(string url, int version, Action<CommonResponseHeader> commonResponseHeader = null)
         {
@@ -23,6 +26,7 @@ namespace FroniusSolarClient
 
 
             _inverterRealtimeDataService = new InverterRealtimeDataService(_restClient);
+            _inverterArchiveDataService = new InverterArchiveDataService(_restClient);
         }
 
         /// <summary>
@@ -67,6 +71,23 @@ namespace FroniusSolarClient
         public MinMaxInverterData GetMinMaxInverterData(int deviceId = 1, Scope scope = Scope.Device)
         {
             return _inverterRealtimeDataService.GetMinMaxInverterData(deviceId, scope);
+        }
+
+        /// <summary>
+        /// Get archived data whenever access to historic device-data is possible. The number of days stored is dependant on the number of connected units that are logging data.
+        /// </summary>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <param name="channels"></param>
+        /// <param name="deviceId"></param>
+        /// <param name="scope"></param>
+        /// <param name="seriesType"></param>
+        /// <param name="humanReadable"></param>
+        /// <param name="deviceClass"></param>
+        /// <returns></returns>
+        public ArchiveData GetArchiveData(DateTime startDate, DateTime endDate, List<Channel> channels, int deviceId = 1, Scope scope = Scope.System, SeriesType seriesType = SeriesType.DailySum, bool humanReadable = true, DeviceClass deviceClass = DeviceClass.Inverter)
+        {
+            return _inverterArchiveDataService.GetArchiveData(startDate, endDate, channels, deviceId, scope, seriesType, humanReadable, deviceClass);
         }
 
     }

@@ -1,5 +1,6 @@
 ﻿using FroniusSolarClient.Entities.SolarAPI.V1;
 using System;
+using System.Collections.Generic;
 
 namespace FroniusSolarClient.Examples
 {
@@ -19,6 +20,20 @@ namespace FroniusSolarClient.Examples
         {
             var client = new SolarClient("10.1.1.124", 1, OutputResponseHeader);
 
+            GetArchiveData(client);
+
+            //GetRealTimeData(client);
+        }
+        static void GetArchiveData(SolarClient client)
+        {
+            var channels = new List<Channel> { Channel.Current_AC_Phase_1 };
+
+            var data = client.GetArchiveData(DateTime.Now.AddDays(-1),DateTime.Now, channels);
+
+            Console.WriteLine(data);
+        }
+        static void GetRealTimeData(SolarClient client)
+        {
             var data = client.GetCommonInverterData(2, Scope.System);
 
             Console.WriteLine(data.TotalEnergy);

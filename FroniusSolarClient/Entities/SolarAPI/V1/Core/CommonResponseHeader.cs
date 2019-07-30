@@ -1,3 +1,5 @@
+using FroniusSolarClient.Extensions;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,8 +16,9 @@ namespace FroniusSolarClient.Entities.SolarAPI.V1
         /// <summary>
         /// Filled with properties named like the given parameters.
         /// </summary>
-        public Dictionary<string, string> RequestArguments { get; set; }
-
+        [JsonConverter(typeof(RequestArgumentsConverter<Dictionary<string, List<string>>>))]
+        public Dictionary<string, List<string>> RequestArguments { get; set; }
+     
         /// <summary>
         /// Information about the response. 
         /// </summary>
