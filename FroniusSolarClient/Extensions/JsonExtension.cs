@@ -7,6 +7,7 @@ namespace FroniusSolarClient.Extensions
 {
     /// <summary>
     /// Converts RequestArguments into string list with either single or multiple item(s)
+    /// This is needed due to potentially providing multiple param values in an archive request (Channel), this means that the json will include an array of values
     /// </summary>
     /// <typeparam name="T"></typeparam>
     class RequestArgumentsConverter<T> : JsonConverter
@@ -18,12 +19,22 @@ namespace FroniusSolarClient.Extensions
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
+            var di = new Dictionary<string, List<string>>();
+
             JToken token = JToken.Load(reader);
-            if (token.Type == JTokenType.Array)
+
+            foreach (JProperty jprop in token.Children<JProperty>())
             {
-                return token.ToObject<List<T>>();
+                if (jprop.First.Type == JTokenType.Array)
+                {              
+                    di.Add(jprop.Name, ((JArray)jprop.Value).ToObject<List<string>>());
+                }
+                else
+                {
+                    di.Add(jprop.Name, new List<string>() { (string)(JValue)jprop.Value });
+                }
             }
-            return new List<T> { token.ToObject<T>() };
+            return di;
         }
 
         public override bool CanWrite
