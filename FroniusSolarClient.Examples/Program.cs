@@ -20,18 +20,11 @@ namespace FroniusSolarClient.Examples
         {
             var client = new SolarClient("10.1.1.124", 1, OutputResponseHeader);
 
-            GetArchiveData(client);
-
+            //GetArchiveDataOverPast24Hours(client);
             //GetRealTimeData(client);
         }
-        static void GetArchiveData(SolarClient client)
-        {
-            var channels = new List<Channel> { Channel.Voltage_AC_Phase_1, Channel.Voltage_AC_Phase_2, Channel.Voltage_AC_Phase_3 };
-
-            var data = client.GetArchiveData(DateTime.Now.AddDays(-1),DateTime.Now, channels);
-
-            Console.WriteLine(data);
-        }
+       
+        #region RealtimeData
         static void GetRealTimeData(SolarClient client)
         {
             var data = client.GetCommonInverterData(2, Scope.System);
@@ -42,5 +35,28 @@ namespace FroniusSolarClient.Examples
 
             Console.WriteLine(data2.MaxCurrentDayAcPower);
         }
+        #endregion
+
+        #region ArchiveData
+        static void GetArchiveDataBetweenDates(SolarClient client)
+        {
+            var channels = new List<Channel> { Channel.Voltage_AC_Phase_1, Channel.Voltage_AC_Phase_2, Channel.Voltage_AC_Phase_3 };
+
+            var dateFrom = DateTime.Parse("01/08/2019");
+            var dateTo = DateTime.Parse("05/08/2019");
+
+            var data = client.GetArchiveData(dateFrom, dateTo, channels);
+
+            Console.WriteLine(data);
+        }
+        static void GetArchiveDataOverPast24Hours(SolarClient client)
+        {
+            var channels = new List<Channel> { Channel.Voltage_AC_Phase_1, Channel.Voltage_AC_Phase_2, Channel.Voltage_AC_Phase_3 };
+
+            var data = client.GetArchiveData(DateTime.Now.AddDays(-1), DateTime.Now, channels);
+
+            Console.WriteLine(data);
+        }
+        #endregion
     }
 }

@@ -5,7 +5,7 @@ A .NET Client wrapper for the [Fronius Solar API](https://www.fronius.com/en/pho
 
 Install the [NuGet package](https://www.nuget.org/packages/FroniusSolarClient.Core/)
 
-`Install-Package FroniusSolarClient.Core`
+ `Install-Package FroniusSolarClient.Core`
 
 ```csharp
 using FroniusSolarClient.Entities.SolarAPI.V1;
@@ -18,14 +18,17 @@ static void OutputResponseHeader(CommonResponseHeader responseHeader)
 var client = new SolarClient("IP_ADDRESS", 1, OutputResponseHeader);
 ```
 
-## Implementation Status
+see [examples](#examples)
+
+## Implementation
 
 [Realtime Requests](#realtime-requests)
 
-|||
-|---|---|
-|[GetInverterRealtimeData](#GetInverterRealtimeData)| **100%**|
+- [GetInverterRealtimeData](#GetInverterRealtimeData)
 
+[Archive Data Requests](#Archive-Data-Requests)
+
+- [Channels](#Channels)
 
 
 
@@ -40,9 +43,46 @@ This request does not care about the configured visibility of single inverters. 
 - P3InverterData (3PInverterData) - Values which are provided by 3phase Fronius inverters. 
 - MinMaxInverterData - Minimum and Maximum values of various inverter values. 
 
+### Archive Data Requests
+Archive requests are provided whenever access to historic device-data is possible. The Datalogger web can only provide what is stored in its internal memory and has not been overwritten by newer data yet, it can loose data due to capacity reasons. The number of days stored is dependant on the number of connected units that are logging data.
+
+#### Channels
+Each channel is handled and requested by name. Most of the channels are recorded in constant cyclic intervals which can be set between 5 and 30 minutes. Only `Digital_PowerManagementRelay_Out_1`, `InverterErrors`, `InverterEvents` and `Hybrid_Operating_State` are event triggered and may occur every time.
+
+|Name|Unit|
+|---|---|
+|TimeSpanInSec |sec|
+|Digital_PowerManagementRelay_Out_1|1|
+|EnergyReal_WAC_Sum_Produced|Wh|
+|InverterEvents | struct|
+|InverterErrors |  struct|
+|Current_DC_String_1 |1A |
+|Current_DC_String_2 |1A |
+|Voltage_DC_String_1 |1V |
+|Voltage_DC_String_2 |1V |
+|Temperature_Powerstage |deg C |
+|Voltage_AC_Phase_1 |1V |
+|Voltage_AC_Phase_2 |1V |
+|Voltage_AC_Phase_3 | 1V |
+|Current_AC_Phase_1 |1A |
+|Current_AC_Phase_2 |1A |
+|Current_AC_Phase_3 |1A |
+|PowerReal_PAC_Sum |1W |
+|EnergyReal_WAC_Minus_Absolute |1Wh|
+|EnergyReal_WAC_Plus_Absolute |1Wh |
+|Meter_Location_Current |1 |
+|Temperature_Channel_1 |1|
+|Temperature_Channel_2 |1 |
+|Digital_Channel_1 |1 |
+|Digital_Channel_2 |1 |
+|Radiation |1 |
+|Digital_PowerManagementRelay_Out_1 |1 |
+|Hybrid_Operating_State |1|
+
 ## Examples
 
 - [GetInverterRealtimeData](#GetInverterRealtimeData)
+- [GetArchiveData](#GetArchiveData)
 
 
 ### GetInverterRealtimeData
@@ -60,6 +100,26 @@ Provide device id and scope
 ```csharp
 var data = client.GetCommonInverterData(2, Scope.System);
 ```
+
+### GetArchiveData
+
+Get channel `Voltage_AC_Phase` data over the past 24 hours 
+
+```csharp
+var channels = new List<Channel> { Channel.Voltage_AC_Phase_1, Channel.Voltage_AC_Phase_2, Channel.Voltage_AC_Phase_3 };
+
+var data = client.GetArchiveData(DateTime.Now.AddDays(-1), DateTime.Now, channels);
+```
+
+or between 2 dates
+
+```csharp
+var dateFrom = DateTime.Parse("01/08/2019");
+var dateTo = DateTime.Parse("05/08/2019");
+
+var data = client.GetArchiveData(dateFrom, dateTo, channels);
+```
+**Query intervals are restricted to a maximum of 16 days and the number of parallel queries is system wide restricted to 4 clients.**
 
 ### Other Examples
 
