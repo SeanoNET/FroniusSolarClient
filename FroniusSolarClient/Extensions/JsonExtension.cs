@@ -14,7 +14,7 @@ namespace FroniusSolarClient.Extensions
     {
         public override bool CanConvert(Type objectType)
         {
-            return (objectType == typeof(T));
+            return (objectType == typeof(Dictionary<string, List<string>>));
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
