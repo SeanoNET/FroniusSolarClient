@@ -26,7 +26,7 @@ namespace FroniusSolarClient.Examples
         }
         static void GetArchiveData(SolarClient client)
         {
-            var channels = new List<Channel> { Channel.Current_AC_Phase_1 };
+            var channels = new List<Channel> { Channel.Voltage_AC_Phase_1, Channel.Voltage_AC_Phase_2, Channel.Voltage_AC_Phase_3 };
 
             var data = client.GetArchiveData(DateTime.Now.AddDays(-1),DateTime.Now, channels);
 

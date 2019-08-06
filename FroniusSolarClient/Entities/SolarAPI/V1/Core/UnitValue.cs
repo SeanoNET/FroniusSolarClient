@@ -6,6 +6,7 @@ namespace FroniusSolarClient.Entities.SolarAPI.V1
         /// Unit name
         /// </summary>
         public string Unit { get; set; }
+
         /// <summary>
         /// Unit value
         /// </summary>

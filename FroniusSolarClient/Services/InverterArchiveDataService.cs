@@ -31,7 +31,7 @@ namespace FroniusSolarClient.Services
 
             string channelParam = "";
 
-            if (channels.Count < 1)
+            if (channels.Count > 1)
             {
                 foreach (Channel channel in channels)
                 {
@@ -52,10 +52,10 @@ namespace FroniusSolarClient.Services
                 $"&{channelParam}";
         }
 
-        public ArchiveData GetArchiveData(DateTime startDate, DateTime endDate, List<Channel> channels, int deviceId, Scope scope, SeriesType seriesType, bool humanReadable, DeviceClass deviceClass)
+        public Dictionary<string, ArchiveData> GetArchiveData(DateTime startDate, DateTime endDate, List<Channel> channels, int deviceId, Scope scope, SeriesType seriesType, bool humanReadable, DeviceClass deviceClass)
         {
             string baseEndpointURL = _cgi + BuildQueryString(deviceId, scope, seriesType, humanReadable, startDate, endDate, channels, deviceClass);
-            return GetDataServiceResponse<ArchiveData>(baseEndpointURL).Body.Data;
+            return GetDataServiceResponse<Dictionary<string, ArchiveData>>(baseEndpointURL).Body.Data;
         }
     }
 }
