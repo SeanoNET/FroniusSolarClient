@@ -31,7 +31,7 @@ see [examples](#examples)
 
 ## Logging
 
-Internal logging has been implemented so you can parse in your own logger class see [Microsoft.Extensions.Logging](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.logging.ilogger?view=aspnetcore-2.2)
+Internal logging has been implemented so you can parse in your own logger implementation see [Microsoft.Extensions.Logging](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.logging.ilogger?view=aspnetcore-2.2)
 
 
 ## Implementation
