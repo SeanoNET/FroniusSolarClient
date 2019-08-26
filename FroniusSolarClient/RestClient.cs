@@ -1,5 +1,6 @@
 ﻿using FroniusSolarClient.Entities.SolarAPI.V1;
 using FroniusSolarClient.Helpers;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Net.Http;
 
@@ -13,13 +14,13 @@ namespace FroniusSolarClient
 
         private readonly HttpClient _httpClient;
         private readonly string _url;
-
+        private readonly ILogger _logger;
         /// <summary>
         /// This action delegate provides access to the response headers
         /// </summary>
-        private Action<CommonResponseHeader> _commonResponseHeader;
+        private Action<CommonResponseHeader, ILogger> _commonResponseHeader;
 
-        public RestClient(HttpClient httpClient, string url, Action<CommonResponseHeader> commonResponseHeader)
+        public RestClient(HttpClient httpClient, string url, Action<CommonResponseHeader, ILogger> commonResponseHeader, ILogger logger)
         {
             if (String.IsNullOrEmpty(url))
                 throw new ArgumentException("URL not specified");
@@ -28,6 +29,7 @@ namespace FroniusSolarClient
             this._url = url;
 
             _commonResponseHeader = commonResponseHeader;
+            _logger = logger;
         }
 
         /// <summary>
@@ -39,6 +41,7 @@ namespace FroniusSolarClient
             var requestMessage = new HttpRequestMessage();
             requestMessage.RequestUri = new Uri($"{_url}{cgi}");
             requestMessage.Method = HttpMethod.Get;
+            _logger.LogInformation($"RequestUri: {requestMessage.RequestUri}");
             return requestMessage;
         }
 
@@ -60,16 +63,19 @@ namespace FroniusSolarClient
                 httpResponse.EnsureSuccessStatusCode();
 
                 var content = httpResponse.Content.ReadAsStringAsync().Result;
+                _logger.LogInformation($"Response Code: {httpResponse.StatusCode.ToString()}");
+                _logger.LogDebug($"Content: {content}");
+
                 var response = JsonHelper.DeSerializeResponse<Response<T>>(content);
 
                 if (_commonResponseHeader != null)
-                    _commonResponseHeader.Invoke(response.Head);
+                    _commonResponseHeader.Invoke(response.Head, _logger);
 
                 return response;
             }
             catch (System.Exception ex)
             {
-                Console.WriteLine($"An error occured: {ex.Message}");
+                _logger.LogError($"An error occured: {ex.Message}");
                 return null;
             }
         }

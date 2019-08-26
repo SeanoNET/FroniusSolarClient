@@ -12,10 +12,10 @@ namespace FroniusSolarClient.Services
     internal class InverterRealtimeDataService : BaseDataService
     {
         private readonly string _cgi = "GetInverterRealtimeData.cgi";
-       
+
         public InverterRealtimeDataService(RestClient restClient) 
             : base(restClient)
-        {    
+        {
         }
 
 
@@ -32,7 +32,7 @@ namespace FroniusSolarClient.Services
 
         public CumulationInverterData GetCumulationInverterData(int deviceId = 1, Scope scope = Scope.Device)
         {
-            string baseEndpointURL = _cgi + BuildQueryString(deviceId, scope, DataCollection.CumulationInverterData);
+            string baseEndpointURL = _cgi + BuildQueryString(deviceId, scope, DataCollection.CumulationInverterData);           
             return GetDataServiceResponse<CumulationInverterData>(baseEndpointURL).Body.Data;
         }
 

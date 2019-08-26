@@ -4,6 +4,7 @@ using FroniusSolarClient.Entities.SolarAPI.V1.InverterRealtimeData;
 using FroniusSolarClient.Services;
 using System;
 using System.Collections.Generic;
+using Microsoft.Extensions.Logging;
 
 namespace FroniusSolarClient
 {
@@ -19,11 +20,11 @@ namespace FroniusSolarClient
         private InverterRealtimeDataService _inverterRealtimeDataService;
         private InverterArchiveDataService _inverterArchiveDataService;
 
-        public SolarClient(string url, int version, Action<CommonResponseHeader> commonResponseHeader = null)
+        public SolarClient(string url, int version, ILogger logger, Action<CommonResponseHeader, ILogger> commonResponseHeader = null)
         {
             _configuration = new SolarClientConfiguration(url, version);
-            _restClient = new RestClient(null, _configuration.GetBaseURL(), commonResponseHeader);
-
+            _restClient = new RestClient(null, _configuration.GetBaseURL(), commonResponseHeader, logger);
+            
 
             _inverterRealtimeDataService = new InverterRealtimeDataService(_restClient);
             _inverterArchiveDataService = new InverterArchiveDataService(_restClient);

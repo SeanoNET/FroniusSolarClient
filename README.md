@@ -9,16 +9,30 @@ Install the [NuGet package](https://www.nuget.org/packages/FroniusSolarClient.Co
 
 ```csharp
 using FroniusSolarClient.Entities.SolarAPI.V1;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
-static void OutputResponseHeader(CommonResponseHeader responseHeader)
+
+static void OutputResponseHeader(CommonResponseHeader responseHeader, ILogger logger)
 {
-    Console.WriteLine($"{responseHeader.Status.Code} at {responseHeader.Timestamp}");
+    logger.LogInformation($"Response Header Status - {responseHeader.Status.Code} at {responseHeader.Timestamp}");
 }
 
-var client = new SolarClient("IP_ADDRESS", 1, OutputResponseHeader);
+// Configure logger
+var serviceProvider = new ServiceCollection()
+    .AddLogging(build => build.AddConsole())
+    .Configure<LoggerFilterOptions>(opt => opt.MinLevel = LogLevel.Debug)
+    .BuildServiceProvider();
+
+var client = new SolarClient("IP_ADDRESS", 1, serviceProvider.GetService<ILogger<SolarClient>>(), OutputResponseHeader);
 ```
 
 see [examples](#examples)
+
+## Logging
+
+Internal logging has been implemented so you can parse in your own logger class see [Microsoft.Extensions.Logging](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.logging.ilogger?view=aspnetcore-2.2)
+
 
 ## Implementation
 

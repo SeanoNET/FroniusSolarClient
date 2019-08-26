@@ -1,4 +1,6 @@
 ﻿using FroniusSolarClient.Entities.SolarAPI.V1;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 
@@ -11,29 +13,31 @@ namespace FroniusSolarClient.Examples
         /// Prints out the status of the last response header
         /// </summary>
         /// <param name="responseHeader"></param>
-        static void OutputResponseHeader(CommonResponseHeader responseHeader)
+        static void OutputResponseHeader(CommonResponseHeader responseHeader, ILogger logger)
         {
-            Console.WriteLine($"{responseHeader.Status.Code} at {responseHeader.Timestamp}");
+            logger.LogInformation($"Response Header Status - {responseHeader.Status.Code} at {responseHeader.Timestamp}");
         }
 
         static void Main(string[] args)
         {
-            var client = new SolarClient("10.1.1.124", 1, OutputResponseHeader);
+            // Configure logger
+            var serviceProvider = new ServiceCollection()
+                .AddLogging(build => build.AddConsole())
+                .Configure<LoggerFilterOptions>(opt => opt.MinLevel = LogLevel.Debug)
+                .BuildServiceProvider();
+           
+            var client = new SolarClient("10.1.1.124", 1, serviceProvider.GetService<ILogger<SolarClient>>(), OutputResponseHeader);
 
             //GetArchiveDataOverPast24Hours(client);
-            //GetRealTimeData(client);
+            GetRealTimeData(client);
         }
        
         #region RealtimeData
         static void GetRealTimeData(SolarClient client)
         {
-            var data = client.GetCommonInverterData(2, Scope.System);
+            var data = client.GetMinMaxInverterData();
 
-            Console.WriteLine(data.TotalEnergy);
-
-            var data2 = client.GetMinMaxInverterData();
-
-            Console.WriteLine(data2.MaxCurrentDayAcPower);
+            Console.WriteLine(data.MaxCurrentDayAcPower);
         }
         #endregion
 
