@@ -25,9 +25,9 @@ namespace FroniusSolarClient.Examples
         #region RealtimeData
         static void GetRealTimeData(SolarClient client)
         {
-            var data = client.GetMinMaxInverterData();
-            Console.WriteLine($"{data.Head.Status.Code} at {data.Head.Timestamp}");
-            Console.WriteLine(data.Body.Data.MaxCurrentDayAcPower);
+            var response = client.GetMinMaxInverterData();
+            Console.WriteLine($"{response.Head.Status.Code} at {response.Head.Timestamp}");
+            Console.WriteLine(response.Body.Data.MaxCurrentDayAcPower);
         }
         #endregion
 

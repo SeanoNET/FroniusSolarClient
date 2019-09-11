@@ -12,19 +12,13 @@ using FroniusSolarClient.Entities.SolarAPI.V1;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-
-static void OutputResponseHeader(CommonResponseHeader responseHeader, ILogger logger)
-{
-    logger.LogInformation($"Response Header Status - {responseHeader.Status.Code} at {responseHeader.Timestamp}");
-}
-
 // Configure logger
 var serviceProvider = new ServiceCollection()
     .AddLogging(build => build.AddConsole())
     .Configure<LoggerFilterOptions>(opt => opt.MinLevel = LogLevel.Debug)
     .BuildServiceProvider();
 
-var client = new SolarClient("IP_ADDRESS", 1, serviceProvider.GetService<ILogger<SolarClient>>(), OutputResponseHeader);
+var client = new SolarClient("IP_ADDRESS", 1, serviceProvider.GetService<ILogger<SolarClient>>());
 ```
 
 see [examples](#examples)
@@ -104,15 +98,16 @@ Each channel is handled and requested by name. Most of the channels are recorded
 Get CommonInverterData
 
 ```csharp
-var data = client.GetCommonInverterData();
+var response = client.GetCommonInverterData();
 
-Console.WriteLine(data.TotalEnergy);
+Console.WriteLine($"{response.Head.Status.Code} at {response.Head.Timestamp}");
+Console.WriteLine(response.Body.Data.TotalEnergy);
 ```
 
 Provide device id and scope
 
 ```csharp
-var data = client.GetCommonInverterData(2, Scope.System);
+var response = client.GetCommonInverterData(2, Scope.System);
 ```
 
 ### GetArchiveData
@@ -122,7 +117,7 @@ Get channel `Voltage_AC_Phase` data over the past 24 hours
 ```csharp
 var channels = new List<Channel> { Channel.Voltage_AC_Phase_1, Channel.Voltage_AC_Phase_2, Channel.Voltage_AC_Phase_3 };
 
-var data = client.GetArchiveData(DateTime.Now.AddDays(-1), DateTime.Now, channels);
+var response = client.GetArchiveData(DateTime.Now.AddDays(-1), DateTime.Now, channels);
 ```
 
 or between 2 dates
@@ -131,7 +126,7 @@ or between 2 dates
 var dateFrom = DateTime.Parse("01/08/2019");
 var dateTo = DateTime.Parse("05/08/2019");
 
-var data = client.GetArchiveData(dateFrom, dateTo, channels);
+var response = client.GetArchiveData(dateFrom, dateTo, channels);
 ```
 **Query intervals are restricted to a maximum of 16 days and the number of parallel queries is system wide restricted to 4 clients.**
 
