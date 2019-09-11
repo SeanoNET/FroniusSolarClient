@@ -86,7 +86,7 @@ namespace FroniusSolarClient
         /// <param name="humanReadable"></param>
         /// <param name="deviceClass"></param>
         /// <returns></returns>
-        public Dictionary<string, ArchiveData> GetArchiveData(DateTime startDate, DateTime endDate, List<Channel> channels, int deviceId = 1, Scope scope = Scope.System, SeriesType seriesType = SeriesType.DailySum, bool humanReadable = true, DeviceClass deviceClass = DeviceClass.Inverter)
+        public Response<Dictionary<string, ArchiveData>> GetArchiveData(DateTime startDate, DateTime endDate, List<Channel> channels, int deviceId = 1, Scope scope = Scope.System, SeriesType seriesType = SeriesType.DailySum, bool humanReadable = true, DeviceClass deviceClass = DeviceClass.Inverter)
         {
             return _inverterArchiveDataService.GetArchiveData(startDate, endDate, channels, deviceId, scope, seriesType, humanReadable, deviceClass);
         }

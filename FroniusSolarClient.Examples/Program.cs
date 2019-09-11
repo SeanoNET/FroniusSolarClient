@@ -59,7 +59,7 @@ namespace FroniusSolarClient.Examples
 
             var data = client.GetArchiveData(DateTime.Now.AddDays(-1), DateTime.Now, channels);
 
-            Console.WriteLine(data);
+            Console.WriteLine(data.Body);
         }
         #endregion
     }
