@@ -36,7 +36,7 @@ namespace FroniusSolarClient
         /// <param name="deviceId"></param>
         /// <param name="scope"></param>
         /// <returns></returns>
-        public CumulationInverterData GetCumulationInverterData(int deviceId = 1, Scope scope = Scope.Device)
+        public Response<CumulationInverterData> GetCumulationInverterData(int deviceId = 1, Scope scope = Scope.Device)
         {
             return _inverterRealtimeDataService.GetCumulationInverterData(deviceId, scope);
         }
@@ -47,7 +47,7 @@ namespace FroniusSolarClient
         /// <param name="deviceId"></param>
         /// <param name="scope"></param>
         /// <returns></returns>
-        public CommonInverterData GetCommonInverterData(int deviceId = 1, Scope scope = Scope.Device)
+        public Response<CommonInverterData> GetCommonInverterData(int deviceId = 1, Scope scope = Scope.Device)
         {
             return _inverterRealtimeDataService.GetCommonInverterData(deviceId, scope);
         }
@@ -58,7 +58,7 @@ namespace FroniusSolarClient
         /// <param name="deviceId"></param>
         /// <param name="scope"></param>
         /// <returns></returns>
-        public P3InverterData GetP3InverterData(int deviceId = 1, Scope scope = Scope.Device)
+        public Response<P3InverterData> GetP3InverterData(int deviceId = 1, Scope scope = Scope.Device)
         {
             return _inverterRealtimeDataService.GetP3InverterData(deviceId, scope);
         }
@@ -69,7 +69,7 @@ namespace FroniusSolarClient
         /// <param name="deviceId"></param>
         /// <param name="scope"></param>
         /// <returns></returns>
-        public MinMaxInverterData GetMinMaxInverterData(int deviceId = 1, Scope scope = Scope.Device)
+        public Response<MinMaxInverterData> GetMinMaxInverterData(int deviceId = 1, Scope scope = Scope.Device)
         {
             return _inverterRealtimeDataService.GetMinMaxInverterData(deviceId, scope);
         }

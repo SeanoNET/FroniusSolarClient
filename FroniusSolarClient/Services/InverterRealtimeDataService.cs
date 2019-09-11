@@ -30,31 +30,31 @@ namespace FroniusSolarClient.Services
             return $"?Scope={scope}&DeviceId={deviceId}&DataCollection={dataCollection}";
         }
 
-        public CumulationInverterData GetCumulationInverterData(int deviceId = 1, Scope scope = Scope.Device)
+        public Response<CumulationInverterData> GetCumulationInverterData(int deviceId = 1, Scope scope = Scope.Device)
         {
             string baseEndpointURL = _cgi + BuildQueryString(deviceId, scope, DataCollection.CumulationInverterData);           
-            return GetDataServiceResponse<CumulationInverterData>(baseEndpointURL).Body.Data;
+            return GetDataServiceResponse<CumulationInverterData>(baseEndpointURL);
         }
 
-        public CommonInverterData GetCommonInverterData(int deviceId = 1, Scope scope = Scope.Device)
+        public Response<CommonInverterData> GetCommonInverterData(int deviceId = 1, Scope scope = Scope.Device)
         {
             string baseEndpointURL = _cgi + BuildQueryString(deviceId, scope, DataCollection.CommonInverterData);
-            return GetDataServiceResponse<CommonInverterData>(baseEndpointURL).Body.Data; 
+            return GetDataServiceResponse<CommonInverterData>(baseEndpointURL); 
         }
 
 
-        public P3InverterData GetP3InverterData(int deviceId = 1, Scope scope = Scope.Device)
+        public Response<P3InverterData> GetP3InverterData(int deviceId = 1, Scope scope = Scope.Device)
         {
             string param = $"?Scope={scope.ToString()}&DeviceId={deviceId}&DataCollection=P3InverterData";
             string baseEndpointURL = _cgi + param;
-            return GetDataServiceResponse<P3InverterData>(baseEndpointURL).Body.Data;
+            return GetDataServiceResponse<P3InverterData>(baseEndpointURL);
         }
 
 
-        public MinMaxInverterData GetMinMaxInverterData(int deviceId = 1, Scope scope = Scope.Device)
+        public Response<MinMaxInverterData> GetMinMaxInverterData(int deviceId = 1, Scope scope = Scope.Device)
         {
             string baseEndpointURL = _cgi + BuildQueryString(deviceId, scope, DataCollection.MinMaxInverterData);
-            return GetDataServiceResponse<MinMaxInverterData>(baseEndpointURL).Body.Data;
+            return GetDataServiceResponse<MinMaxInverterData>(baseEndpointURL);
         }
 
     }
