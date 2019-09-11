@@ -11,16 +11,11 @@ namespace FroniusSolarClient
     /// </summary>
     internal class RestClient
     {
-
         private readonly HttpClient _httpClient;
         private readonly string _url;
         private readonly ILogger _logger;
-        /// <summary>
-        /// This action delegate provides access to the response headers
-        /// </summary>
-        private Action<CommonResponseHeader, ILogger> _commonResponseHeader;
 
-        public RestClient(HttpClient httpClient, string url, Action<CommonResponseHeader, ILogger> commonResponseHeader, ILogger logger)
+        public RestClient(HttpClient httpClient, string url, ILogger logger)
         {
             if (String.IsNullOrEmpty(url))
                 throw new ArgumentException("URL not specified");
@@ -28,7 +23,6 @@ namespace FroniusSolarClient
             this._httpClient = httpClient ?? new HttpClient();
             this._url = url;
 
-            _commonResponseHeader = commonResponseHeader;
             _logger = logger;
         }
 
@@ -67,9 +61,6 @@ namespace FroniusSolarClient
                 _logger.LogDebug($"Content: {content}");
 
                 var response = JsonHelper.DeSerializeResponse<Response<T>>(content);
-
-                if (_commonResponseHeader != null)
-                    _commonResponseHeader.Invoke(response.Head, _logger);
 
                 return response;
             }

@@ -8,16 +8,6 @@ namespace FroniusSolarClient.Examples
 {
     class Program
     {
-
-        /// <summary>
-        /// Prints out the status of the last response header
-        /// </summary>
-        /// <param name="responseHeader"></param>
-        static void OutputResponseHeader(CommonResponseHeader responseHeader, ILogger logger)
-        {
-            logger.LogInformation($"Response Header Status - {responseHeader.Status.Code} at {responseHeader.Timestamp}");
-        }
-
         static void Main(string[] args)
         {
             // Configure logger
@@ -26,7 +16,7 @@ namespace FroniusSolarClient.Examples
                 .Configure<LoggerFilterOptions>(opt => opt.MinLevel = LogLevel.Debug)
                 .BuildServiceProvider();
            
-            var client = new SolarClient("10.1.1.124", 1, serviceProvider.GetService<ILogger<SolarClient>>(), OutputResponseHeader);
+            var client = new SolarClient("10.1.1.124", 1, serviceProvider.GetService<ILogger<SolarClient>>());
 
             //GetArchiveDataOverPast24Hours(client);
             GetRealTimeData(client);

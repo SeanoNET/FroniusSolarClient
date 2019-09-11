@@ -20,10 +20,10 @@ namespace FroniusSolarClient
         private InverterRealtimeDataService _inverterRealtimeDataService;
         private InverterArchiveDataService _inverterArchiveDataService;
 
-        public SolarClient(string url, int version, ILogger logger, Action<CommonResponseHeader, ILogger> commonResponseHeader = null)
+        public SolarClient(string url, int version, ILogger logger)
         {
             _configuration = new SolarClientConfiguration(url, version);
-            _restClient = new RestClient(null, _configuration.GetBaseURL(), commonResponseHeader, logger);
+            _restClient = new RestClient(null, _configuration.GetBaseURL(), logger);
             
 
             _inverterRealtimeDataService = new InverterRealtimeDataService(_restClient);
