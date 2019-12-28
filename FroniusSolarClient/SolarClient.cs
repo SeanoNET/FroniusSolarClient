@@ -5,6 +5,7 @@ using FroniusSolarClient.Services;
 using System;
 using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
+using FroniusSolarClient.Entities.SolarAPI.V1.PowerFlowRealtimeData;
 
 namespace FroniusSolarClient
 {
@@ -19,6 +20,7 @@ namespace FroniusSolarClient
         // Services
         private InverterRealtimeDataService _inverterRealtimeDataService;
         private InverterArchiveDataService _inverterArchiveDataService;
+        private PowerFlowRealtimeDataService _powerFlowRealtimeDataService;
 
         public SolarClient(string url, int version, ILogger logger)
         {
@@ -28,6 +30,7 @@ namespace FroniusSolarClient
 
             _inverterRealtimeDataService = new InverterRealtimeDataService(_restClient);
             _inverterArchiveDataService = new InverterArchiveDataService(_restClient);
+            _powerFlowRealtimeDataService = new PowerFlowRealtimeDataService(_restClient);
         }
 
         /// <summary>
@@ -91,5 +94,9 @@ namespace FroniusSolarClient
             return _inverterArchiveDataService.GetArchiveData(startDate, endDate, channels, deviceId, scope, seriesType, humanReadable, deviceClass);
         }
 
+        public Response<PowerFlowRealtimeData> GetPowerFlowRealtimeData()
+        {
+            return _powerFlowRealtimeDataService.GetPowerFlowRealtimeData();
+        }
     }
 }

@@ -33,6 +33,7 @@ Internal logging has been implemented so you can parse in your own logger implem
 [Realtime Requests](#realtime-requests)
 
 - [GetInverterRealtimeData](#GetInverterRealtimeData)
+- [GetPowerFlowRealtimeData](#GetPowerFlowRealtimeData)
 
 [Archive Data Requests](#Archive-Data-Requests)
 
@@ -50,6 +51,10 @@ This request does not care about the configured visibility of single inverters. 
 - CommonInverterData - Values which are provided by all types of Fronius inverters. 
 - P3InverterData (3PInverterData) - Values which are provided by 3phase Fronius inverters. 
 - MinMaxInverterData - Minimum and Maximum values of various inverter values. 
+
+#### GetPowerFlowRealtimeData
+This request provides detailed information about the local energy grid. The values replied represent the current state. Because of data has multiple asynchronous origins it is a matter of facts that the sum of all powers (grid,load and generate) will differ from zero. This request does not care about the configured visibility of single inverters. All inverters are reported.
+
 
 ### Archive Data Requests
 Archive requests are provided whenever access to historic device-data is possible. The Datalogger web can only provide what is stored in its internal memory and has not been overwritten by newer data yet, it can loose data due to capacity reasons. The number of days stored is dependant on the number of connected units that are logging data.

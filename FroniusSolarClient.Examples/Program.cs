@@ -18,10 +18,15 @@ namespace FroniusSolarClient.Examples
            
             var client = new SolarClient("10.1.1.124", 1, serviceProvider.GetService<ILogger<SolarClient>>());
 
-            //GetArchiveDataOverPast24Hours(client);
-            GetRealTimeData(client);
+            GetPowerFlowRealtimeData(client);
         }
        
+        static void GetPowerFlowRealtimeData(SolarClient client)
+        {
+            var data = client.GetPowerFlowRealtimeData();
+
+            Console.WriteLine(data);
+        }
         #region RealtimeData
         static void GetRealTimeData(SolarClient client)
         {
