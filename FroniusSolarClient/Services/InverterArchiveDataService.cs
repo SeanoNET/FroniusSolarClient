@@ -48,7 +48,7 @@ namespace FroniusSolarClient.Services
             if (scope == Scope.Device)
                 deviceClassParam = $"&DeviceClass={deviceClass.ToString()}";
 
-            return $"?Scope={scope}&StartDate={startDate.ToString("d.M.yyyy")}&EndDate={endDate.ToString("d.M.yyyy")}&HumanReadable={humanReadable.ToString()}&{seriesType.ToString()}{deviceClassParam}" +
+            return $"?Scope={scope}&StartDate={startDate.ToString("d.M.yyyy")}&EndDate={endDate.ToString("d.M.yyyy")}&HumanReadable={humanReadable.ToString()}&SeriesType={seriesType.ToString()}{deviceClassParam}" +
                 $"&{channelParam}";
         }
 

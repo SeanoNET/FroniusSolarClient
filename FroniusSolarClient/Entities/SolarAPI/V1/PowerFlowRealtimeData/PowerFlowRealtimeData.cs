@@ -104,13 +104,13 @@ namespace FroniusSolarClient.Entities.SolarAPI.V1.PowerFlowRealtimeData
         /// This value is null if no meter is enabled ( + from grid, - to grid ) 
         /// </summary>
         [JsonProperty("P_Grid")]
-        public int PGrid { get; set; }
+        public decimal PGrid { get; set; }
 
         /// <summary>
         /// This value is null if no meter is enabled ( + generator, - consumer ) 
         /// </summary>
         [JsonProperty("P_Load")]
-        public int PLoad { get; set; }
+        public decimal PLoad { get; set; }
 
         /// <summary>
         /// This value is null if inverter is not running ( + production ( default ) ) 
