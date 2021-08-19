@@ -119,7 +119,7 @@ namespace FroniusSolarClient.Entities.SolarAPI.V1.PowerFlowRealtimeData
         public int PPV { get; set; }
 
         /// <summary>
-        /// Current relative autonomy in %, null if no smart meter is connected 
+        /// Current relative autonomy in %, null if no smart meter is connected     
         /// </summary>
         [JsonProperty("rel_Autonomy")]
         public int RelAutonomy { get; set; }
@@ -128,7 +128,7 @@ namespace FroniusSolarClient.Entities.SolarAPI.V1.PowerFlowRealtimeData
         /// Current relative self consumption in %, null if no smart meter is connected 
         /// </summary>
         [JsonProperty("rel_SelfConsumption")]
-        public int RelSelfConsumption { get; set; }
+        public decimal? RelSelfConsumption { get; set; }
 
         /// <summary>
         /// Field is available if configured (false) or active (true)
