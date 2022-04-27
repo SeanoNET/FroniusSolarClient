@@ -45,7 +45,7 @@ namespace FroniusSolarClient.Services
 
         public Response<P3InverterData> GetP3InverterData(int deviceId = 1, Scope scope = Scope.Device)
         {
-            string param = $"?Scope={scope.ToString()}&DeviceId={deviceId}&DataCollection=P3InverterData";
+            string param = $"?Scope={scope.ToString()}&DeviceId={deviceId}&DataCollection=3PInverterData";
             string baseEndpointURL = _cgi + param;
             return GetDataServiceResponse<P3InverterData>(baseEndpointURL);
         }
