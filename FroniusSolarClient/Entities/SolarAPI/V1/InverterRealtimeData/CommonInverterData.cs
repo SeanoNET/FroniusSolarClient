@@ -13,7 +13,7 @@ namespace FroniusSolarClient.Entities.SolarAPI.V1.InverterRealtimeData
         /// AC power 
         /// </summary>
         [JsonProperty("PAC")]
-        public UnitValue<int> AcPower { get; set; }
+        public UnitValue<decimal> AcPower { get; set; }
 
         /// <summary>
         /// AC current 
